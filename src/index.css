@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-dark::placeholder {
+  color: #ccc;
+  opacity: 1; /* Firefox */
+}
+
+.bg-dark::-ms-input-placeholder { /* Edge 12 -18 */
+  color: #ccc;
+}
+
+a{
+  color: #2d96ff;
+}
