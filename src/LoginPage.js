@@ -83,7 +83,7 @@ function LoginPage({ isDarkMode }) {
     if (username !== "" && password !== null) {
       disableButton(btnPointer);
       try {
-        const response = await makeApiCall("/auth/login", "POST", {
+        const response = await makeApiCall("/login", "POST", {
           username: username,
           password: password,
         });
