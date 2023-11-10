@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import LoggedInOutlet from "./components/outlets/LoggedInOutlet";
-import { isLoggedIn, logOut } from "./utils";
+import { isLoggedIn } from "./utils";
 
 function Header({ isDarkMode, setIsDarkMode }) {
   const navigate = useNavigate();
@@ -23,7 +23,14 @@ function Header({ isDarkMode, setIsDarkMode }) {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("credentials");
+    navigate("/login");
+  };
+
   const isHomePage = window.location.pathname === "/";
+
+  var isAuth = isLoggedIn();
 
   return (
     <>
@@ -52,7 +59,7 @@ function Header({ isDarkMode, setIsDarkMode }) {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {isLoggedIn() ? (
+            {isAuth ? (
               <Nav className="ms-auto">
                 <Nav.Link as={Link} to="/dashboard">
                   Dashboard
@@ -60,9 +67,7 @@ function Header({ isDarkMode, setIsDarkMode }) {
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
-                <Nav.Link as={Link} to="/login" onClick={logOut()}>
-                  Logout
-                </Nav.Link>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 <Nav.Link href="#contact">
                   <label htmlFor="dark-mode-switch">
                     <input

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PageLoader from "./PageLoader";
 import Product from "./Product";
 import StarRatingView from "./StarRatingView";
-import { makeApiCall } from "./utils";
+import { makeApiCall, truncateString } from "./utils";
 
 function DashboardPage({ isDarkMode }) {
   const [data, setData] = useState([]);
@@ -62,12 +62,19 @@ function DashboardPage({ isDarkMode }) {
                       }}
                     >
                       <div className="d-flex justify-content-between">
-                        <strong>{product.title}</strong>
+                        <strong title={product.title}>
+                          {truncateString(product.title, 20)}
+                        </strong>
                         <strong>₹{product.price}</strong>
                       </div>
                       <div className="d-flex justify-content-between mt-2">
                         <StarRatingView rating={product.rating} />
-                        <button className="btn btn-warning">Add to cart</button>
+                        <button
+                          className="btn btn-sm btn-primary"
+                          style={{ borderRadius: "10px" }}
+                        >
+                          Add to cart
+                        </button>
                       </div>
 
                       <strong></strong>

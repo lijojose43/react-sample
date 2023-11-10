@@ -3,17 +3,17 @@ import React, { useEffect, useState } from "react";
 import SideImageBlock from "./SideImageBlock";
 
 function ProfilePage({ isDarkMode }) {
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // getUserData();
-  });
+    const getUserData = () => {
+      const storedUserData = JSON.parse(localStorage.getItem("credentials"));
+      setUserData(storedUserData);
+      console.log(storedUserData);
+    };
 
-  const getUserData = () => {
-    const userData = JSON.parse(localStorage.getItem("credentials"));
-    setUserData(userData);
-    console.log(userData);
-  };
+    getUserData(); // Call the function to fetch user data
+  }, []);
 
   return (
     <div className="container">
@@ -24,7 +24,26 @@ function ProfilePage({ isDarkMode }) {
             <h3 className="text-center mb-3">My Profile</h3>
             <div className="p-3 mb-5 rounded" style={{ margin: "0 auto" }}>
               <div className="card-body">
-                <h4>Name : {userData.firstName}</h4>
+                {userData && (
+                  <h5>
+                    <img
+                      className="mt-3"
+                      src={userData.image}
+                      style={{
+                        height: "180px",
+                        width: "180px",
+                        borderRadius: "100px",
+                      }}
+                      alt="Symbol"
+                    />
+                    <br />
+                    <br />
+                    Name : {`${userData.firstName} ${userData.lastName}`}
+                    <br />
+                    <br />
+                    Gender : {`${userData.gender}`}
+                  </h5>
+                )}
               </div>
             </div>
           </div>

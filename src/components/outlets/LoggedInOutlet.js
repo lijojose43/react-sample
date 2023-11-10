@@ -1,16 +1,17 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { isLoggedIn } from "../../utils";
 
-function LoggedInOutlet() {
-  if (isLoggedIn()) {
+function LoggedInOutlet(isDarkMode) {
+  const isLogged = isLoggedIn();
+  if (isLogged) {
     return (
       <>
         <Outlet />
       </>
     );
   } else {
-    return <></>;
+    return <Navigate to="/login"></Navigate>;
   }
 }
 

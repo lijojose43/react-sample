@@ -12,48 +12,53 @@ export const handleEmailChange = (event, setEmail, setEmailError) => {
   }
 };
 
-export const makeApiCall = async (endpoint, method = "GET", data = null) => {
+// Common API call function
+export const makeApiCall = (endpoint, method = "GET", data = null) => {
   const url = `${process.env.REACT_APP_API_URL}${endpoint}`;
-  try {
-    const requestOptions = {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
 
-    if (method !== "GET") {
-      // Only include a body when the method is not GET
-      requestOptions.body = JSON.stringify(data);
-    }
+  const headers = {
+    "Content-Type": "application/json",
+  };
 
-    const response = await fetch(url, requestOptions);
+  const options = {
+    method,
+    headers,
+  };
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  } catch (error) {
-    // Handle error scenarios here
-    console.error("Error fetching data:", error);
-    return null;
+  if (data) {
+    options.body = JSON.stringify(data);
   }
+
+  return new Promise((resolve, reject) => {
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(resolve)
+      .catch(reject);
+  });
 };
 
 export const isLoggedIn = () => {
-  setTimeout(() => {
-    const storedData = localStorage.getItem("credentials");
-    if (storedData) {
-      const credentials = JSON.parse(storedData);
-      if (credentials.token) {
-        return true;
-      } else {
-        return false;
-      }
+  const storedData = localStorage.getItem("credentials");
+  if (storedData) {
+    const credentials = JSON.parse(storedData);
+    if (credentials.token) {
+      return true;
+    } else {
+      return false;
     }
-  }, 4000); // 2000 milliseconds = 2 seconds
+  }
 };
 
-export const logOut = () => {
-  localStorage.removeItem("credentials");
+// utils.js
+export const truncateString = (str, maxLength) => {
+  if (str.length <= maxLength) {
+    return str;
+  } else {
+    return `${str.substring(0, maxLength)}...`;
+  }
 };

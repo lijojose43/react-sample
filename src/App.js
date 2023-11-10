@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -15,17 +15,30 @@ import PrivacyPage from "./PrivacyPage";
 import ProfilePage from "./ProfilePage";
 import SignupPage from "./SignupPage";
 import TermsPage from "./TermsPage";
+import { isLoggedIn } from "./utils";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   document.body.style.backgroundColor = isDarkMode ? "#333" : "#FFF";
 
+  useEffect(() => {
+    window.addEventListener("online", handleNetworkChange);
+    window.addEventListener("offline", handleNetworkChange);
+
+    return () => {
+      window.removeEventListener("online", handleNetworkChange);
+      window.removeEventListener("offline", handleNetworkChange);
+    };
+  }, []);
+
   function handleNetworkChange() {
     setIsOnline(navigator.onLine);
   }
 
-  const isAuthenticated = true;
+  const isLoggedin = isLoggedIn();
+
+  console.log("sttsuss" + isLoggedin);
 
   return (
     <>
@@ -45,6 +58,16 @@ function App() {
             >
               <div className="App w-100">
                 <Routes>
+                  <Route
+                    path=""
+                    element={
+                      isLoggedin === true ? (
+                        <Navigate to="/dashboard" />
+                      ) : (
+                        <Navigate to="/login" />
+                      )
+                    }
+                  />
                   <Route
                     path="/login"
                     element={<LoginPage isDarkMode={isDarkMode} />}

@@ -82,34 +82,24 @@ function LoginPage({ isDarkMode }) {
     }
     if (username !== "" && password !== null) {
       disableButton(btnPointer);
-      try {
-        const response = await makeApiCall("/login", "POST", {
-          username: username,
-          password: password,
-        });
-
-        if (response) {
+      makeApiCall("/auth/login", "POST", {
+        username: username,
+        password: password,
+      })
+        .then((response) => {
           enablButton(btnPointer);
-          localStorage.clear();
+          // localStorage.clear();
+          // console.log("heeeeeeeeeeeeeee" + JSON.stringify(response));
           localStorage.setItem("credentials", JSON.stringify(response));
           setErrorMessage("");
           setSuccessLogin(true);
           navigate("/dashboard");
-          // Redirect to home page or show success message
-        } else if (response.status === 401) {
-          // Unauthorized response (status code 401) indicates incorrect password
-          setErrorMessage("Incorrect password. Please try again.");
-        } else {
+        })
+        .catch((error) => {
           setErrorMessage("Incorrect username or password");
           btnPointer.innerHTML = "Login";
           btnPointer.removeAttribute("disabled");
-        }
-      } catch (error) {
-        setErrorMessage("Server down");
-        btnPointer.innerHTML = "Login";
-        btnPointer.removeAttribute("disabled");
-        console.error(error);
-      }
+        });
     }
   };
 
