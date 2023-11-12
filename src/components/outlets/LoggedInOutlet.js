@@ -3,15 +3,14 @@ import { Navigate, Outlet } from "react-router-dom";
 import { isLoggedIn } from "../../utils";
 
 function LoggedInOutlet(isDarkMode) {
-  const isLogged = isLoggedIn();
-  if (isLogged) {
+  if (isLoggedIn()) {
     return (
       <>
         <Outlet />
       </>
     );
   } else {
-    return <Navigate to="/login"></Navigate>;
+    return <Navigate to="/login" isDarkMode={isDarkMode}></Navigate>;
   }
 }
 
