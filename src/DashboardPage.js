@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
+import CustomPagination from "./CustomPagination";
 import PageLoader from "./PageLoader";
 import Product from "./Product";
 import StarRatingView from "./StarRatingView";
@@ -8,15 +9,26 @@ import { makeApiCall, truncateString } from "./utils";
 function DashboardPage({ isDarkMode }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await makeApiCall("/products");
+      const skip = (activePage - 1) * itemsPerPage;
+      const response = await makeApiCall(
+        `/products?limit=${itemsPerPage}&skip=${skip}`
+      );
+      setTotalPages(Math.ceil(response.total / itemsPerPage));
       setData(response.products);
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [activePage]);
+
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
 
   return (
     <>
@@ -31,7 +43,6 @@ function DashboardPage({ isDarkMode }) {
       ) : (
         <div className="container">
           <div className="col-md-12">
-            <h4>All Products</h4>
             <Product />
             <div className="row">
               {data.map((product, index) => (
@@ -83,6 +94,11 @@ function DashboardPage({ isDarkMode }) {
                 </div>
               ))}
             </div>
+            <CustomPagination
+              totalPages={totalPages}
+              activePage={activePage}
+              onPageChange={handlePageChange}
+            />
           </div>
         </div>
       )}
