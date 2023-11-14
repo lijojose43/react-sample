@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import CustomPagination from "./CustomPagination";
 import PageLoader from "./PageLoader";
-import Product from "./Product";
+import ProductDetails from "./ProductDetails";
 import StarRatingView from "./StarRatingView";
 import { makeApiCall, truncateString } from "./utils";
 
@@ -12,6 +12,8 @@ function DashboardPage({ isDarkMode }) {
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 12;
+  const [showOffCanvas, setShowOffCanvas] = useState(false);
+  const [productDetails, setProductDetails] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +28,18 @@ function DashboardPage({ isDarkMode }) {
     fetchData();
   }, [activePage]);
 
+  const fetchProductData = async (productId) => {
+    const response = await makeApiCall(`/products/${productId}`);
+    setProductDetails(response);
+  };
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+  };
+
+  const handleShow = (productId) => {
+    fetchProductData(productId);
+    setShowOffCanvas(true);
   };
 
   return (
@@ -43,13 +55,20 @@ function DashboardPage({ isDarkMode }) {
       ) : (
         <div className="container">
           <div className="col-md-12">
-            <Product />
             <div className="row">
+              {productDetails && (
+                <ProductDetails
+                  productDetails={productDetails}
+                  showOffCanvas={showOffCanvas}
+                  setShowOffCanvas={setShowOffCanvas}
+                />
+              )}
               {data.map((product, index) => (
                 <div key={index} className="col-md-3 mb-3">
                   <div
                     className="card bg-secondary"
                     style={{ borderRadius: "10px", borderColor: "none" }}
+                    onClick={() => handleShow(product.id)}
                   >
                     <div
                       className="card-body"
