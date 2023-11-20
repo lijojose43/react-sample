@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import "./App.css";
+import { CartProvider } from "./CartContext";
 import DashboardPage from "./DashboardPage";
 import ForgotPasswordPage from "./ForgotPasswordPage";
 import Header from "./Header";
@@ -37,11 +38,8 @@ function App() {
   }
 
   const isLoggedin = isLoggedIn();
-
-  console.log("sttsuss" + isLoggedin);
-
   return (
-    <>
+    <CartProvider>
       {!isOnline ? (
         <OfflineAlert />
       ) : (
@@ -108,7 +106,7 @@ function App() {
           </BrowserRouter>
         </Provider>
       )}
-    </>
+    </CartProvider>
   );
 }
 

@@ -9,7 +9,6 @@ function ProfilePage({ isDarkMode }) {
     const getUserData = () => {
       const storedUserData = JSON.parse(localStorage.getItem("credentials"));
       setUserData(storedUserData);
-      console.log(storedUserData);
     };
 
     getUserData(); // Call the function to fetch user data
@@ -21,13 +20,13 @@ function ProfilePage({ isDarkMode }) {
         <div className="row">
           <SideImageBlock image="/register.svg"></SideImageBlock>
           <div className="col-md-5">
-            <h3 className="text-center mb-3">My Profile</h3>
+            <h3 className="text-left mb-3">My Profile</h3>
             <div className="p-3 mb-5 rounded" style={{ margin: "0 auto" }}>
               <div className="card-body">
                 {userData && (
-                  <h5>
+                  <div>
                     <img
-                      className="mt-3"
+                      className="mt-2"
                       src={userData.image}
                       style={{
                         height: "180px",
@@ -36,13 +35,10 @@ function ProfilePage({ isDarkMode }) {
                       }}
                       alt="Symbol"
                     />
-                    <br />
-                    <br />
-                    Name : {`${userData.firstName} ${userData.lastName}`}
-                    <br />
-                    <br />
-                    Gender : {`${userData.gender}`}
-                  </h5>
+                    <div style={{ textAlign: "center" }} className="mt-3">
+                      Name : {`${userData.firstName} ${userData.lastName}`}
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

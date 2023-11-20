@@ -1,19 +1,29 @@
-import { faArrowLeft, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faCartShopping,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import React, { useContext, useEffect } from "react";
+import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import CartContext, { useCart } from "./CartContext";
 import LoggedInOutlet from "./components/outlets/LoggedInOutlet";
 import { isLoggedIn } from "./utils";
 
 function Header({ isDarkMode, setIsDarkMode }) {
   const navigate = useNavigate();
+  const { currentCartCount, updateCartCount } = useContext(CartContext);
+  const { cartCount } = useCart();
   useEffect(() => {
     const storedValue = localStorage.getItem("isDarkMode");
     if (storedValue === "true") {
       setIsDarkMode(true);
     }
-  }, []);
+    const cartCount = JSON.parse(localStorage.getItem("cart")).length;
+    updateCartCount(cartCount);
+  }, [setIsDarkMode, updateCartCount]);
 
   useEffect(() => {
     localStorage.setItem("isDarkMode", isDarkMode);
@@ -61,6 +71,18 @@ function Header({ isDarkMode, setIsDarkMode }) {
           <Navbar.Collapse id="basic-navbar-nav">
             {isAuth ? (
               <Nav className="ms-auto">
+                <Nav.Link href="#contact">
+                  <label htmlFor="dark-mode-switch">
+                    <input
+                      style={{ margin: "10px", display: "none" }}
+                      type="checkbox"
+                      id="dark-mode-switch"
+                      checked={isDarkMode}
+                      onChange={toggleDarkMode}
+                    />
+                    <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
+                  </label>
+                </Nav.Link>
                 <Nav.Link as={Link} to="/dashboard">
                   Dashboard
                 </Nav.Link>
@@ -68,6 +90,17 @@ function Header({ isDarkMode, setIsDarkMode }) {
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <Nav.Link>
+                  <div>
+                    <FontAwesomeIcon icon={faCartShopping} />
+                    <Badge pill variant="danger" className="ml-1">
+                      {cartCount}
+                    </Badge>
+                  </div>
+                </Nav.Link>
+              </Nav>
+            ) : (
+              <Nav className="ms-auto">
                 <Nav.Link href="#contact">
                   <label htmlFor="dark-mode-switch">
                     <input
@@ -80,26 +113,11 @@ function Header({ isDarkMode, setIsDarkMode }) {
                     <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
                   </label>
                 </Nav.Link>
-              </Nav>
-            ) : (
-              <Nav className="ms-auto">
                 <Nav.Link as={Link} to="/login">
                   Login
                 </Nav.Link>
                 <Nav.Link as={Link} to="/signup">
                   Signup
-                </Nav.Link>
-                <Nav.Link href="#contact">
-                  <label htmlFor="dark-mode-switch">
-                    <input
-                      style={{ margin: "10px", display: "none" }}
-                      type="checkbox"
-                      id="dark-mode-switch"
-                      checked={isDarkMode}
-                      onChange={toggleDarkMode}
-                    />
-                    <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
-                  </label>
                 </Nav.Link>
               </Nav>
             )}

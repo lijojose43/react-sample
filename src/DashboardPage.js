@@ -12,8 +12,9 @@ function DashboardPage({ isDarkMode }) {
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 12;
-  const [showOffCanvas, setShowOffCanvas] = useState(false);
+  const [showOffProductDetails, setShowOffProductDetails] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
+  const [isDetailsLoading, setDetailsLoader] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,17 +30,19 @@ function DashboardPage({ isDarkMode }) {
   }, [activePage]);
 
   const fetchProductData = async (productId) => {
+    setDetailsLoader(true);
     const response = await makeApiCall(`/products/${productId}`);
     setProductDetails(response);
+    setDetailsLoader(false);
   };
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
 
-  const handleShow = (productId) => {
+  const handleProductDetailsShow = (productId) => {
     fetchProductData(productId);
-    setShowOffCanvas(true);
+    setShowOffProductDetails(true);
   };
 
   return (
@@ -59,16 +62,22 @@ function DashboardPage({ isDarkMode }) {
               {productDetails && (
                 <ProductDetails
                   productDetails={productDetails}
-                  showOffCanvas={showOffCanvas}
-                  setShowOffCanvas={setShowOffCanvas}
+                  showOffProductDetails={showOffProductDetails}
+                  setShowOffProductDetails={setShowOffProductDetails}
+                  isDarkMode={isDarkMode}
+                  isDetailsLoading={isDetailsLoading}
                 />
               )}
               {data.map((product, index) => (
                 <div key={index} className="col-md-3 mb-3">
                   <div
-                    className="card bg-secondary"
-                    style={{ borderRadius: "10px", borderColor: "none" }}
-                    onClick={() => handleShow(product.id)}
+                    className="card"
+                    style={{
+                      borderRadius: "10px",
+                      borderColor: "none",
+                      padding: "6px",
+                    }}
+                    onClick={() => handleProductDetailsShow(product.id)}
                   >
                     <div
                       className="card-body"
@@ -84,30 +93,23 @@ function DashboardPage({ isDarkMode }) {
                         style={{ height: "130px", width: "160px" }}
                       />
                     </div>
-                    <div
-                      className="card-footer bg-secondary text-white"
-                      style={{
-                        borderTopLeftRadius: "10px",
-                        borderTopRightRadius: "10px",
-                      }}
-                    >
+                    <div className="card-footer text-dark">
                       <div className="d-flex justify-content-between">
-                        <strong title={product.title}>
-                          {truncateString(product.title, 20)}
-                        </strong>
+                        <span style={{ textAlign: "left" }}>
+                          <span title={product.title}>
+                            {truncateString(product.title, 18)}
+                          </span>
+                        </span>
                         <strong>₹{product.price}</strong>
                       </div>
-                      <div className="d-flex justify-content-between mt-2">
-                        <StarRatingView rating={product.rating} />
-                        <button
-                          className="btn btn-sm btn-primary"
-                          style={{ borderRadius: "10px" }}
-                        >
-                          Add to cart
-                        </button>
+                      <div className="d-flex justify-content-between">
+                        <span style={{ textAlign: "left" }}>
+                          <StarRatingView rating={product.rating} />
+                        </span>
+                        <strong className="text-success">
+                          {product.discountPercentage}% OFF
+                        </strong>
                       </div>
-
-                      <strong></strong>
                     </div>
                   </div>
                 </div>

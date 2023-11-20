@@ -88,8 +88,6 @@ function LoginPage({ isDarkMode }) {
       })
         .then((response) => {
           enablButton(btnPointer);
-          // localStorage.clear();
-          // console.log("heeeeeeeeeeeeeee" + JSON.stringify(response));
           localStorage.setItem("credentials", JSON.stringify(response));
           setErrorMessage("");
           setSuccessLogin(true);
