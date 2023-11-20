@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Carousel, Offcanvas } from "react-bootstrap";
-import CartContext from "./CartContext";
+import CartContext from "./AppContext";
 import ProductDetailsLoader from "./ProductDetailsLoader";
 
 const ProductDetails = ({

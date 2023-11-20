@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
+import Cart from "./Cart";
 import CustomPagination from "./CustomPagination";
 import PageLoader from "./PageLoader";
 import ProductDetails from "./ProductDetails";
@@ -68,6 +69,10 @@ function DashboardPage({ isDarkMode }) {
                   isDetailsLoading={isDetailsLoading}
                 />
               )}
+              <Cart
+                isDarkMode={isDarkMode}
+                handleProductDetailsShow={handleProductDetailsShow}
+              />
               {data.map((product, index) => (
                 <div key={index} className="col-md-3 mb-3">
                   <div

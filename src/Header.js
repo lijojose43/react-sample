@@ -8,14 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import CartContext, { useCart } from "./CartContext";
+import AppContext, { useAppContext } from "./AppContext";
 import LoggedInOutlet from "./components/outlets/LoggedInOutlet";
 import { isLoggedIn } from "./utils";
 
 function Header({ isDarkMode, setIsDarkMode }) {
   const navigate = useNavigate();
-  const { currentCartCount, updateCartCount } = useContext(CartContext);
-  const { cartCount } = useCart();
+  const { currentCartCount, updateCartCount } = useContext(AppContext);
+  const { showCart, handleCartShow } = useContext(AppContext);
+
+  const { cartCount } = useAppContext();
   useEffect(() => {
     const storedValue = localStorage.getItem("isDarkMode");
     if (storedValue === "true") {
@@ -31,6 +33,10 @@ function Header({ isDarkMode, setIsDarkMode }) {
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const handleCartClick = (status) => {
+    handleCartShow(status);
   };
 
   const handleLogout = () => {
@@ -91,7 +97,7 @@ function Header({ isDarkMode, setIsDarkMode }) {
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 <Nav.Link>
-                  <div>
+                  <div onClick={() => handleCartClick(!showCart)}>
                     <FontAwesomeIcon icon={faCartShopping} />
                     <Badge pill variant="danger" className="ml-1">
                       {cartCount}
