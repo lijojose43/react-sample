@@ -9,7 +9,7 @@ import React, { useContext, useEffect } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import AppContext, { useAppContext } from "../context/AppContext";
-import { isLoggedIn } from "../utils";
+import { isLoggedIn } from "../utils/utils";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
 function Header({ isDarkMode, setIsDarkMode }) {

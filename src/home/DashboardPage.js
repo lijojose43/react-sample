@@ -4,7 +4,7 @@ import Cart from "../cart/Cart";
 import CustomPagination from "../components/CustomPagination";
 import StarRatingView from "../components/StarRatingView";
 import ProductDetails from "../products/ProductDetails";
-import { makeApiCall, truncateString } from "../utils";
+import { makeApiCall, truncateString } from "../utils/utils";
 import PageLoader from "./PageLoader";
 
 function DashboardPage({ isDarkMode }) {

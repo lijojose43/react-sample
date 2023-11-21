@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SideImageBlock from "../components/SideImageBlock";
-import { handleEmailChange } from "../utils";
+import { handleEmailChange } from "../utils/utils";
 
 function ForgotPasswordPage({ isDarkMode }) {
   const [email, setEmail] = useState("");
