@@ -15,7 +15,7 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
         onHide={handleClose}
         placement="end"
         style={{
-          top: "56px",
+          top: "57px",
           backgroundColor: isDarkMode ? "#333" : "#FFF",
           color: isDarkMode ? "#FFF" : "#333",
           borderTopLeftRadius: "25px",
@@ -24,33 +24,35 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <strong>Cart</strong>
+            <strong>Your Cart</strong>
           </Offcanvas.Title>
         </Offcanvas.Header>
         {isCartLoading ? (
           <CartLoader isDarkMode={isDarkMode} />
         ) : (
-          <Offcanvas.Body>
+          <Offcanvas.Body style={{ paddingTop: "0px" }}>
             {cartItems ? (
               <div>
                 <span className="mx-auto">
                   {cartItems.map((product, key) => {
                     return (
                       <div
-                        className="card"
+                        className="card mb-2 text-white"
                         style={{
                           borderRadius: "10px",
                           borderColor: "none",
-                          padding: "6px",
+                          backgroundColor: isDarkMode
+                            ? "rgb(77 77 77)"
+                            : "#FFF",
                         }}
                         onClick={() => handleProductDetailsShow(product.id)}
                       >
-                        <div className="card-body">
+                        <div className="card-body text-white">
                           <div className="d-flex">
                             <img
                               src={product.images[0]}
                               alt="Symbol"
-                              style={{ width: "100px" }}
+                              style={{ width: "100px", height: "70px" }}
                             />
                             <span className="p-2">
                               {product.title}
