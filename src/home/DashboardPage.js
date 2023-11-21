@@ -1,11 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import Cart from "./Cart";
-import CustomPagination from "./CustomPagination";
+import Cart from "../cart/Cart";
+import CustomPagination from "../components/CustomPagination";
+import StarRatingView from "../components/StarRatingView";
+import ProductDetails from "../products/ProductDetails";
+import { makeApiCall, truncateString } from "../utils";
 import PageLoader from "./PageLoader";
-import ProductDetails from "./ProductDetails";
-import StarRatingView from "./StarRatingView";
-import { makeApiCall, truncateString } from "./utils";
 
 function DashboardPage({ isDarkMode }) {
   const [data, setData] = useState([]);

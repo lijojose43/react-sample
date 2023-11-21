@@ -5,17 +5,17 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import "./App.css";
-import { AppProvider } from "./AppContext";
-import DashboardPage from "./DashboardPage";
-import ForgotPasswordPage from "./ForgotPasswordPage";
-import Header from "./Header";
-import LoginPage from "./LoginPage";
-import NotFound from "./NotFound";
-import OfflineAlert from "./OfflineAlert";
-import PrivacyPage from "./PrivacyPage";
-import ProfilePage from "./ProfilePage";
-import SignupPage from "./SignupPage";
-import TermsPage from "./TermsPage";
+import ForgotPasswordPage from "./authentication/ForgotPasswordPage";
+import LoginPage from "./authentication/LoginPage";
+import NotFound from "./authentication/NotFound";
+import OfflineAlert from "./authentication/OfflineAlert";
+import PrivacyPage from "./authentication/PrivacyPage";
+import SignupPage from "./authentication/SignupPage";
+import TermsPage from "./authentication/TermsPage";
+import Header from "./components/Header";
+import { AppProvider } from "./context/AppContext";
+import DashboardPage from "./home/DashboardPage";
+import ProfilePage from "./home/ProfilePage";
 import { isLoggedIn } from "./utils";
 
 function App() {

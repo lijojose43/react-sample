@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import SideImageBlock from "./SideImageBlock";
+import SideImageBlock from "../components/SideImageBlock";
 import Terms from "./Terms";
 
 function LoginPage({ isDarkMode }) {

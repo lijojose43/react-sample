@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import SideImageBlock from "./SideImageBlock";
+import SideImageBlock from "../components/SideImageBlock";
 
 function ProfilePage({ isDarkMode }) {
   const [userData, setUserData] = useState(null);

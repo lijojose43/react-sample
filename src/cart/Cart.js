@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
-import AppContext from "./AppContext";
-import CartLoader from "./CartLoader";
+import CartLoader from "../cart/CartLoader";
+import AppContext from "../context/AppContext";
 
 const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
   const [isCartLoading, setCartLoader] = useState(false);

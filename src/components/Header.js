@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import AppContext, { useAppContext } from "./AppContext";
-import LoggedInOutlet from "./components/outlets/LoggedInOutlet";
-import { isLoggedIn } from "./utils";
+import AppContext, { useAppContext } from "../context/AppContext";
+import { isLoggedIn } from "../utils";
+import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
 function Header({ isDarkMode, setIsDarkMode }) {
   const navigate = useNavigate();

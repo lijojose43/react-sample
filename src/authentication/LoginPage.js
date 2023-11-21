@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SideImageBlock from "./SideImageBlock";
+import SideImageBlock from "../components/SideImageBlock";
+import Toaster from "../components/Toaster";
+import { makeApiCall } from "../utils";
 import Terms from "./Terms";
-import Toaster from "./Toaster";
-import { makeApiCall } from "./utils";
 
 function LoginPage({ isDarkMode }) {
   const [username, setUsername] = useState("");
