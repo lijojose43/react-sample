@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SideImageBlock from "../components/SideImageBlock";
 import Toaster from "../components/Toaster";
+import { useAppContext } from "../context/AppContext";
 import { makeApiCall } from "../utils/utils";
 import Terms from "./Terms";
 
-function LoginPage({ isDarkMode }) {
+function LoginPage() {
+  const { isDarkMode } = useAppContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

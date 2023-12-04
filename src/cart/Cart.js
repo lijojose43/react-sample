@@ -18,8 +18,6 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
           top: "57px",
           backgroundColor: isDarkMode ? "#333" : "#FFF",
           color: isDarkMode ? "#FFF" : "#333",
-          borderTopLeftRadius: "25px",
-          borderBottomLeftRadius: "25px",
         }}
       >
         <Offcanvas.Header closeButton>
@@ -54,7 +52,7 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
                               alt="Symbol"
                               style={{ width: "100px", height: "70px" }}
                             />
-                            <span className="p-2">
+                            <span className="p-2 text-dark">
                               {product.title}
                               <br />
                               Quantity : {product.quantity ?? 1}

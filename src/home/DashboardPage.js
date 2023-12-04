@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import Cart from "../cart/Cart";
 import CustomPagination from "../components/CustomPagination";
 import StarRatingView from "../components/StarRatingView";
+import { useAppContext } from "../context/AppContext";
 import ProductDetails from "../products/ProductDetails";
 import { makeApiCall, truncateString } from "../utils/utils";
 import PageLoader from "./PageLoader";
 
-function DashboardPage({ isDarkMode }) {
+function DashboardPage() {
+  const { isDarkMode } = useAppContext();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
@@ -81,6 +83,7 @@ function DashboardPage({ isDarkMode }) {
                       borderRadius: "10px",
                       borderColor: "none",
                       padding: "6px",
+                      backgroundColor: isDarkMode ? "#222" : "#FFF",
                     }}
                     onClick={() => handleProductDetailsShow(product.id)}
                   >
@@ -98,7 +101,13 @@ function DashboardPage({ isDarkMode }) {
                         style={{ height: "130px", width: "160px" }}
                       />
                     </div>
-                    <div className="card-footer text-dark">
+                    <div
+                      className="card-footer"
+                      style={{
+                        color: isDarkMode ? "#fff" : "#333",
+                        backgroundColor: isDarkMode ? "#222" : "#FFF",
+                      }}
+                    >
                       <div className="d-flex justify-content-between">
                         <span style={{ textAlign: "left" }}>
                           <span title={product.title}>

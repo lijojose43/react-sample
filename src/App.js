@@ -16,11 +16,11 @@ import ProfilePage from "./home/ProfilePage";
 import { isLoggedIn } from "./utils/utils";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  document.body.style.backgroundColor = isDarkMode ? "#333" : "#FFF";
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
+    setIsDarkMode(false);
     window.addEventListener("online", handleNetworkChange);
     window.addEventListener("offline", handleNetworkChange);
 
@@ -28,15 +28,25 @@ function App() {
       window.removeEventListener("online", handleNetworkChange);
       window.removeEventListener("offline", handleNetworkChange);
     };
-  }, []);
+  }, [setIsDarkMode]);
 
   function handleNetworkChange() {
     setIsOnline(navigator.onLine);
   }
 
+  const toggleDarkMode = () => {
+    const mode = !isDarkMode;
+    setIsDarkMode(mode);
+    localStorage.setItem("isDarkMode", mode);
+  };
+
   const isLoggedin = isLoggedIn();
   return (
-    <AppProvider>
+    <AppProvider
+      isDarkMode={isDarkMode}
+      setIsDarkMode={setIsDarkMode}
+      toggleDarkMode={toggleDarkMode}
+    >
       {!isOnline ? (
         <OfflineAlert />
       ) : (
@@ -77,15 +87,7 @@ function App() {
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="*" element={<NotFound />} />
-                <Route
-                  path="/"
-                  element={
-                    <Header
-                      isDarkMode={isDarkMode}
-                      setIsDarkMode={setIsDarkMode}
-                    />
-                  }
-                >
+                <Route path="/" element={<Header isDarkMode={isDarkMode} />}>
                   <Route
                     index
                     path="/dashboard"

@@ -2,9 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SideImageBlock from "../components/SideImageBlock";
+import { useAppContext } from "../context/AppContext";
 import Terms from "./Terms";
 
-function LoginPage({ isDarkMode }) {
+function SignupPage() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +15,7 @@ function LoginPage({ isDarkMode }) {
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [nameError, setNameError] = useState("");
+  const { isDarkMode } = useAppContext();
 
   const handleSignup = async () => {
     if (!name) {
@@ -173,4 +175,4 @@ function LoginPage({ isDarkMode }) {
   );
 }
 
-export default LoginPage;
+export default SignupPage;

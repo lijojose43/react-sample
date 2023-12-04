@@ -7,7 +7,7 @@ export const useAppContext = () => {
   return useContext(AppContext);
 };
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children, isDarkMode, toggleDarkMode }) => {
   const [cartCount, setCartCount] = useState(0);
   const [showCart, setShowCart] = useState(false);
 
@@ -21,7 +21,14 @@ export const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ cartCount, showCart, updateCartCount, handleCartShow }}
+      value={{
+        cartCount,
+        showCart,
+        isDarkMode,
+        updateCartCount,
+        handleCartShow,
+        toggleDarkMode,
+      }}
     >
       {children}
     </AppContext.Provider>

@@ -5,35 +5,29 @@ import {
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import AppContext, { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../context/AppContext";
 import { isLoggedIn } from "../utils/utils";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
-function Header({ isDarkMode, setIsDarkMode }) {
+function Header() {
   const navigate = useNavigate();
-  const { currentCartCount, updateCartCount } = useContext(AppContext);
-  const { showCart, handleCartShow } = useContext(AppContext);
+  const {
+    cartCount,
+    updateCartCount,
+    showCart,
+    handleCartShow,
+    isDarkMode,
+    toggleDarkMode,
+  } = useAppContext();
 
-  const { cartCount } = useAppContext();
   useEffect(() => {
-    const storedValue = localStorage.getItem("isDarkMode");
-    if (storedValue === "true") {
-      setIsDarkMode(true);
-    }
-    const cartCount = JSON.parse(localStorage.getItem("cart")).length;
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cartCount = cart && cart.length;
     updateCartCount(cartCount);
-  }, [setIsDarkMode, updateCartCount]);
-
-  useEffect(() => {
-    localStorage.setItem("isDarkMode", isDarkMode);
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  }, [updateCartCount]);
 
   const handleCartClick = (status) => {
     handleCartShow(status);

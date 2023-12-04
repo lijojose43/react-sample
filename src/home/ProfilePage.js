@@ -2,9 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import SideImageBlock from "../components/SideImageBlock";
 
-function ProfilePage({ isDarkMode }) {
+function ProfilePage() {
   const [userData, setUserData] = useState(null);
-
   useEffect(() => {
     const getUserData = () => {
       const storedUserData = JSON.parse(localStorage.getItem("credentials"));
