@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import Cart from "../cart/Cart";
-import CustomPagination from "../components/CustomPagination";
 import StarRatingView from "../components/StarRatingView";
 import { useAppContext } from "../context/AppContext";
 import ProductDetails from "../products/ProductDetails";
@@ -19,18 +18,47 @@ function DashboardPage() {
   const [productDetails, setProductDetails] = useState(null);
   const [isDetailsLoading, setDetailsLoader] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const skip = (activePage - 1) * itemsPerPage;
+    const response = await makeApiCall(
+      `/products?limit=${itemsPerPage}&skip=${skip}`
+    );
+    setTotalPages(Math.ceil(response.total / itemsPerPage));
+    setData([...data, ...response.products]);
+    setIsLoading(false);
+
+    // Update activePage only if there are more pages to fetch
+    if (activePage < totalPages) {
+      setActivePage(activePage + 1);
+    }
+
+    setLoading(false);
+  };
+
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 20) {
+      fetchData();
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const skip = (activePage - 1) * itemsPerPage;
-      const response = await makeApiCall(
-        `/products?limit=${itemsPerPage}&skip=${skip}`
-      );
-      setTotalPages(Math.ceil(response.total / itemsPerPage));
-      setData(response.products);
-      setIsLoading(false);
+    if (data.length === 0) {
+      fetchData(); // Fetch initial data
+      setActivePage(activePage + 1);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the scroll event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
-    fetchData();
-  }, [activePage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]); // Add 'data' as a dependency to run the effect when 'data' changes
 
   const fetchProductData = async (productId) => {
     setDetailsLoader(true);
@@ -129,11 +157,11 @@ function DashboardPage() {
                 </div>
               ))}
             </div>
-            <CustomPagination
+            {/* <CustomPagination
               totalPages={totalPages}
               activePage={activePage}
               onPageChange={handlePageChange}
-            />
+            /> */}
           </div>
         </div>
       )}
