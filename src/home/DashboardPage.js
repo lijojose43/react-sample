@@ -23,16 +23,18 @@ function DashboardPage() {
   const fetchData = async () => {
     setLoading(true);
     const skip = (activePage - 1) * itemsPerPage;
-    const response = await makeApiCall(
-      `/products?limit=${itemsPerPage}&skip=${skip}`
-    );
-    setTotalPages(Math.ceil(response.total / itemsPerPage));
-    setData([...data, ...response.products]);
-    setIsLoading(false);
+    if (totalPages !== activePage) {
+      const response = await makeApiCall(
+        `/products?limit=${itemsPerPage}&skip=${skip}`
+      );
+      setTotalPages(Math.ceil(response.total / itemsPerPage));
+      setData([...data, ...response.products]);
+      setIsLoading(false);
 
-    // Update activePage only if there are more pages to fetch
-    if (activePage < totalPages) {
-      setActivePage(activePage + 1);
+      // Update activePage only if there are more pages to fetch
+      if (activePage < totalPages) {
+        setActivePage(activePage + 1);
+      }
     }
 
     setLoading(false);
