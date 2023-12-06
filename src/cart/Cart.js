@@ -35,7 +35,7 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
                   {cartItems.map((product, key) => {
                     return (
                       <div
-                        className="card mb-2 text-white"
+                        className="card mb-2"
                         style={{
                           borderRadius: "10px",
                           borderColor: "none",
@@ -45,14 +45,22 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
                         }}
                         onClick={() => handleProductDetailsShow(product.id)}
                       >
-                        <div className="card-body text-white">
+                        <div className="card-body">
                           <div className="d-flex">
                             <img
                               src={product.images[0]}
                               alt="Symbol"
-                              style={{ width: "100px", height: "70px" }}
+                              style={{
+                                width: "100px",
+                                height: "70px",
+                                borderRadius: "10px",
+                              }}
                             />
-                            <span className="p-2 text-dark">
+                            <span
+                              className={
+                                isDarkMode ? "p-2 text-white" : "text-dark"
+                              }
+                            >
                               {product.title}
                               <br />
                               Quantity : {product.quantity ?? 1}
