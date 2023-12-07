@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/AppContext";
+import Cart from "../cart/Cart";
+import { useCartContext } from "../context/CartContext";
 import { isLoggedIn } from "../utils/utils";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
@@ -21,7 +22,8 @@ function Header() {
     handleCartShow,
     isDarkMode,
     toggleDarkMode,
-  } = useAppContext();
+    handleProductDetailsShow,
+  } = useCartContext();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -125,6 +127,7 @@ function Header() {
         </Container>
       </Navbar>
       <LoggedInOutlet isDarkMode={isDarkMode} />
+      <Cart handleProductDetailsShow={handleProductDetailsShow} />
     </>
   );
 }

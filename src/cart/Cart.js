@@ -1,13 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import CartLoader from "../cart/CartLoader";
-import AppContext from "../context/AppContext";
+import { useAppContext } from "../context/AppContext";
+import { useCartContext } from "../context/CartContext";
 
-const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
+const Cart = () => {
   const [isCartLoading, setCartLoader] = useState(false);
-  const { showCart, handleCartShow } = useContext(AppContext);
+  const { isDarkMode } = useAppContext();
+  const { showCart, handleCartShow, handleProductDetailsShow } =
+    useCartContext();
   const handleClose = () => handleCartShow(false);
   const cartItems = JSON.parse(localStorage.getItem("cart"));
+
+  let reversedCartItems = [];
+  if (Array.isArray(cartItems)) {
+    reversedCartItems = cartItems.slice().reverse();
+  }
   return (
     <div>
       <Offcanvas
@@ -29,10 +37,10 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
           <CartLoader isDarkMode={isDarkMode} />
         ) : (
           <Offcanvas.Body style={{ paddingTop: "0px" }}>
-            {cartItems ? (
+            {reversedCartItems ? (
               <div>
                 <span className="mx-auto">
-                  {cartItems.map((product, key) => {
+                  {reversedCartItems.map((product, key) => {
                     return (
                       <div
                         className="card mb-2"

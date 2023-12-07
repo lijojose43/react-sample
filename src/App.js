@@ -11,6 +11,7 @@ import SignupPage from "./authentication/SignupPage";
 import TermsPage from "./authentication/TermsPage";
 import Header from "./components/Header";
 import { AppProvider } from "./context/AppContext";
+import { CartProvider } from "./context/CartContext";
 import DashboardPage from "./home/DashboardPage";
 import ProfilePage from "./home/ProfilePage";
 import { isLoggedIn } from "./utils/utils";
@@ -47,62 +48,64 @@ function App() {
       setIsDarkMode={setIsDarkMode}
       toggleDarkMode={toggleDarkMode}
     >
-      {!isOnline ? (
-        <OfflineAlert />
-      ) : (
-        <BrowserRouter>
-          <div
-            style={{
-              backgroundColor: isDarkMode ? "#333" : "#FFF",
-              color: isDarkMode ? "#FFF" : "#333",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div className="App w-100">
-              <Routes>
-                <Route
-                  path=""
-                  element={
-                    isLoggedin === true ? (
-                      <Navigate to="/dashboard" />
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-                <Route
-                  path="/login"
-                  element={<LoginPage isDarkMode={isDarkMode} />}
-                />
-                <Route
-                  path="/signup"
-                  element={<SignupPage isDarkMode={isDarkMode} />}
-                />
-                <Route
-                  path="/forgot-password"
-                  element={<ForgotPasswordPage isDarkMode={isDarkMode} />}
-                />
-                <Route path="/terms" element={<TermsPage />} />
-                <Route path="/privacy" element={<PrivacyPage />} />
-                <Route path="*" element={<NotFound />} />
-                <Route path="/" element={<Header isDarkMode={isDarkMode} />}>
+      <CartProvider>
+        {!isOnline ? (
+          <OfflineAlert />
+        ) : (
+          <BrowserRouter>
+            <div
+              style={{
+                backgroundColor: isDarkMode ? "#333" : "#FFF",
+                color: isDarkMode ? "#FFF" : "#333",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div className="App w-100">
+                <Routes>
                   <Route
-                    index
-                    path="/dashboard"
-                    element={<DashboardPage isDarkMode={isDarkMode} />}
+                    path=""
+                    element={
+                      isLoggedin === true ? (
+                        <Navigate to="/dashboard" />
+                      ) : (
+                        <Navigate to="/login" />
+                      )
+                    }
                   />
                   <Route
-                    path="/profile"
-                    element={<ProfilePage isDarkMode={isDarkMode} />}
+                    path="/login"
+                    element={<LoginPage isDarkMode={isDarkMode} />}
                   />
-                </Route>
-              </Routes>
+                  <Route
+                    path="/signup"
+                    element={<SignupPage isDarkMode={isDarkMode} />}
+                  />
+                  <Route
+                    path="/forgot-password"
+                    element={<ForgotPasswordPage isDarkMode={isDarkMode} />}
+                  />
+                  <Route path="/terms" element={<TermsPage />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
+                  <Route path="*" element={<NotFound />} />
+                  <Route path="/" element={<Header isDarkMode={isDarkMode} />}>
+                    <Route
+                      index
+                      path="/dashboard"
+                      element={<DashboardPage isDarkMode={isDarkMode} />}
+                    />
+                    <Route
+                      path="/profile"
+                      element={<ProfilePage isDarkMode={isDarkMode} />}
+                    />
+                  </Route>
+                </Routes>
+              </div>
             </div>
-          </div>
-        </BrowserRouter>
-      )}
+          </BrowserRouter>
+        )}
+      </CartProvider>
     </AppProvider>
   );
 }

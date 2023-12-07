@@ -1,5 +1,5 @@
 // AppContext.js
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext } from "react";
 
 const AppContext = createContext();
 
@@ -8,25 +8,10 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children, isDarkMode, toggleDarkMode }) => {
-  const [cartCount, setCartCount] = useState(0);
-  const [showCart, setShowCart] = useState(false);
-
-  const updateCartCount = (count) => {
-    setCartCount(count);
-  };
-
-  const handleCartShow = (status) => {
-    setShowCart(status);
-  };
-
   return (
     <AppContext.Provider
       value={{
-        cartCount,
-        showCart,
         isDarkMode,
-        updateCartCount,
-        handleCartShow,
         toggleDarkMode,
       }}
     >

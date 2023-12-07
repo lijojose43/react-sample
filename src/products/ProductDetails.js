@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel, Offcanvas } from "react-bootstrap";
-import CartContext from "../context/AppContext";
+import { useCartContext } from "../context/CartContext";
 import ProductDetailsLoader from "./ProductDetailsLoader";
 
 const ProductDetails = ({
@@ -15,7 +15,7 @@ const ProductDetails = ({
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  const { cartCount, updateCartCount } = useContext(CartContext);
+  const { cartCount, updateCartCount } = useCartContext();
 
   const handleClose = () => setShowOffProductDetails(false);
 

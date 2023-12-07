@@ -1,22 +1,25 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import Cart from "../cart/Cart";
 import StarRatingView from "../components/StarRatingView";
-import { useAppContext } from "../context/AppContext";
+import { useCartContext } from "../context/CartContext";
 import ProductDetails from "../products/ProductDetails";
 import { makeApiCall, truncateString } from "../utils/utils";
 import PageLoader from "./PageLoader";
 
 function DashboardPage() {
-  const { isDarkMode } = useAppContext();
+  const {
+    isDarkMode,
+    productDetails,
+    isDetailsLoading,
+    showOffProductDetails,
+    setShowOffProductDetails,
+    handleProductDetailsShow,
+  } = useCartContext();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 12;
-  const [showOffProductDetails, setShowOffProductDetails] = useState(false);
-  const [productDetails, setProductDetails] = useState(null);
-  const [isDetailsLoading, setDetailsLoader] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -62,22 +65,6 @@ function DashboardPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]); // Add 'data' as a dependency to run the effect when 'data' changes
 
-  const fetchProductData = async (productId) => {
-    setDetailsLoader(true);
-    const response = await makeApiCall(`/products/${productId}`);
-    setProductDetails(response);
-    setDetailsLoader(false);
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
-
-  const handleProductDetailsShow = (productId) => {
-    fetchProductData(productId);
-    setShowOffProductDetails(true);
-  };
-
   return (
     <>
       {isLoading ? (
@@ -101,10 +88,6 @@ function DashboardPage() {
                   isDetailsLoading={isDetailsLoading}
                 />
               )}
-              <Cart
-                isDarkMode={isDarkMode}
-                handleProductDetailsShow={handleProductDetailsShow}
-              />
               {data.map((product, index) => (
                 <div key={index} className="col-md-3 mb-3">
                   <div
