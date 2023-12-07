@@ -15,7 +15,7 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
         onHide={handleClose}
         placement="end"
         style={{
-          top: "57px",
+          top: "56px",
           backgroundColor: isDarkMode ? "#333" : "#FFF",
           color: isDarkMode ? "#FFF" : "#333",
         }}
@@ -58,12 +58,13 @@ const Cart = ({ isDarkMode, handleProductDetailsShow }) => {
                             />
                             <span
                               className={
-                                isDarkMode ? "p-2 text-white" : "text-dark"
+                                isDarkMode ? "p-2 text-white" : "p-2 text-dark"
                               }
                             >
-                              {product.title}
+                              <strong>{product.title}</strong>
+                              <br />₹{product.price}
                               <br />
-                              Quantity : {product.quantity ?? 1}
+                              <small>Qty : {product.quantity ?? 1}</small>
                             </span>
                           </div>
                         </div>

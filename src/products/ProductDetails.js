@@ -54,6 +54,7 @@ const ProductDetails = ({
         style={{
           backgroundColor: isDarkMode ? "#333" : "#FFF",
           color: isDarkMode ? "#FFF" : "#333",
+          top: "56px",
         }}
       >
         <Offcanvas.Header closeButton>
@@ -96,7 +97,7 @@ const ProductDetails = ({
                 <div
                   style={{
                     position: "sticky",
-                    bottom: "0px",
+                    bottom: "-5px",
                     width: "100%",
                     backgroundColor: isDarkMode ? "#333" : "#FFF",
                     padding: "10px",
