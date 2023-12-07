@@ -97,7 +97,7 @@ const ProductDetails = ({
                 <div
                   style={{
                     position: "sticky",
-                    bottom: "-5px",
+                    bottom: "-16px",
                     width: "100%",
                     backgroundColor: isDarkMode ? "#333" : "#FFF",
                     padding: "10px",
