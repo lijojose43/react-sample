@@ -10,7 +10,7 @@ const ProductDetails = ({
   isDarkMode,
   isDetailsLoading,
 }) => {
-  const { updateCartCount, cartItems, setCartItems } = useCartContext();
+  const { cartItems, addToCart } = useCartContext();
 
   const handleClose = () => setShowOffProductDetails(false);
 
@@ -19,26 +19,6 @@ const ProductDetails = ({
       localStorage.setItem("cart", JSON.stringify(cartItems));
     }
   }, [cartItems]);
-
-  const addToCart = (productDetails) => {
-    const itemIndex = cartItems.findIndex(
-      (item) => item.id === productDetails.id
-    );
-
-    if (itemIndex === -1) {
-      // Item doesn't exist, add it to the cart
-      setCartItems([...cartItems, productDetails]);
-    } else {
-      // Item exists, update its quantity (or other properties)
-      const updatedCart = [...cartItems];
-      updatedCart[itemIndex] = {
-        ...updatedCart[itemIndex],
-        quantity: updatedCart[itemIndex].quantity + 1, // Or update other properties
-      };
-      setCartItems(updatedCart);
-      updateCartCount(updatedCart.length);
-    }
-  };
 
   return (
     <div>
