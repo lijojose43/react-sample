@@ -14,6 +14,10 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
   const [showOffProductDetails, setShowOffProductDetails] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
   const [isDetailsLoading, setDetailsLoader] = useState(false);
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
 
   const updateCartCount = (count) => {
     setCartCount(count);
@@ -51,6 +55,8 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
         setProductDetails,
         setDetailsLoader,
         handleProductDetailsShow,
+        cartItems,
+        setCartItems,
       }}
     >
       {children}

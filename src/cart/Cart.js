@@ -1,3 +1,8 @@
+import {
+  faCartShopping,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import CartLoader from "../cart/CartLoader";
@@ -7,6 +12,7 @@ import { useCartContext } from "../context/CartContext";
 const Cart = () => {
   const [isCartLoading, setCartLoader] = useState(false);
   const { isDarkMode } = useAppContext();
+  const { setCartItems } = useCartContext();
   const { showCart, handleCartShow, handleProductDetailsShow } =
     useCartContext();
   const handleClose = () => handleCartShow(false);
@@ -16,6 +22,12 @@ const Cart = () => {
   if (Array.isArray(cartItems)) {
     reversedCartItems = cartItems.slice().reverse();
   }
+
+  const removeItemFromCart = (productId) => {
+    const updatedCart = cartItems.filter((item) => item.id !== productId);
+    setCartItems(updatedCart);
+  };
+
   return (
     <div>
       <Offcanvas
@@ -23,21 +35,21 @@ const Cart = () => {
         onHide={handleClose}
         placement="end"
         style={{
-          top: "56px",
           backgroundColor: isDarkMode ? "#333" : "#FFF",
           color: isDarkMode ? "#FFF" : "#333",
+          borderRadius: "20px 0 0 20px",
         }}
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <strong>Your Cart</strong>
+            <strong>Your cart</strong>
           </Offcanvas.Title>
         </Offcanvas.Header>
         {isCartLoading ? (
           <CartLoader isDarkMode={isDarkMode} />
         ) : (
           <Offcanvas.Body style={{ paddingTop: "0px" }}>
-            {reversedCartItems ? (
+            {reversedCartItems.length > 0 ? (
               <div>
                 <span className="mx-auto">
                   {reversedCartItems.map((product, key) => {
@@ -51,29 +63,38 @@ const Cart = () => {
                             ? "rgb(77 77 77)"
                             : "#FFF",
                         }}
-                        onClick={() => handleProductDetailsShow(product.id)}
                       >
                         <div className="card-body">
-                          <div className="d-flex">
-                            <img
-                              src={product.images[0]}
-                              alt="Symbol"
-                              style={{
-                                width: "100px",
-                                height: "70px",
-                                borderRadius: "10px",
-                              }}
-                            />
-                            <span
-                              className={
-                                isDarkMode ? "p-2 text-white" : "p-2 text-dark"
-                              }
-                            >
-                              <strong>{product.title}</strong>
-                              <br />₹{product.price}
-                              <br />
-                              <small>Qty : {product.quantity ?? 1}</small>
-                            </span>
+                          <div className="d-flex justify-content-between align-items-top">
+                            <div className="d-flex align-items-center">
+                              <img
+                                src={product.images[0]}
+                                alt="Symbol"
+                                style={{
+                                  width: "100px",
+                                  height: "70px",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                              <span
+                                className={
+                                  isDarkMode
+                                    ? "p-2 text-white"
+                                    : "p-2 text-dark"
+                                }
+                              >
+                                <strong>{product.title}</strong>
+                                <br />₹{product.price}
+                                <br />
+                                <small>Qty : {product.quantity ?? 1}</small>
+                              </span>
+                            </div>
+                            <div style={{ right: "5px" }}>
+                              <FontAwesomeIcon
+                                icon={faTimesCircle}
+                                onClick={() => removeItemFromCart(product.id)}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -82,7 +103,12 @@ const Cart = () => {
                 </span>
               </div>
             ) : (
-              <p>Your cart is empty</p>
+              <div className="mt-5 d-flex flex-column align-items-center justify-content-center">
+                <span className="text-center">
+                  <FontAwesomeIcon icon={faCartShopping} size="3x" />
+                  <p className="mt-2">Your cart is empty</p>
+                </span>
+              </div>
             )}
           </Offcanvas.Body>
         )}

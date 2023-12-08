@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Carousel, Offcanvas } from "react-bootstrap";
 import { useCartContext } from "../context/CartContext";
 import ProductDetailsLoader from "./ProductDetailsLoader";
@@ -10,12 +10,7 @@ const ProductDetails = ({
   isDarkMode,
   isDetailsLoading,
 }) => {
-  const [cartItems, setCartItems] = useState(() => {
-    const storedCart = localStorage.getItem("cart");
-    return storedCart ? JSON.parse(storedCart) : [];
-  });
-
-  const { cartCount, updateCartCount } = useCartContext();
+  const { updateCartCount, cartItems, setCartItems } = useCartContext();
 
   const handleClose = () => setShowOffProductDetails(false);
 
@@ -54,7 +49,7 @@ const ProductDetails = ({
         style={{
           backgroundColor: isDarkMode ? "#333" : "#FFF",
           color: isDarkMode ? "#FFF" : "#333",
-          top: "56px",
+          borderRadius: "20px 0 0 20px",
         }}
       >
         <Offcanvas.Header closeButton>
