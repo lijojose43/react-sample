@@ -61,13 +61,23 @@ const ProductDetails = ({
                   </Carousel>
                 </span>
                 <h4 className="mt-2">{productDetails.title}</h4>
-                <span className="badge badge-success">
+                <span
+                  className="badge text-white"
+                  style={{ backgroundColor: "blue", borderColor: "blue" }}
+                >
                   {productDetails.brand}
                 </span>
-                <span className="badge badge-success">
+                <span
+                  className="badge text-white"
+                  style={{
+                    backgroundColor: "blue",
+                    borderColor: "blue",
+                    marginLeft: "10px",
+                  }}
+                >
                   {productDetails.category}
                 </span>
-                <p className="mt-3">{productDetails.description}</p>
+                <p className="mt-2">{productDetails.description}</p>
                 {/* Other content in the parent div */}
                 <div
                   style={{

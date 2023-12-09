@@ -13,7 +13,7 @@ import { useCartContext } from "../context/CartContext";
 import { isLoggedIn } from "../utils/utils";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
-function Header() {
+function Header({ toggleDarkMode }) {
   const navigate = useNavigate();
   const {
     cartCount,
@@ -21,7 +21,6 @@ function Header() {
     showCart,
     handleCartShow,
     isDarkMode,
-    toggleDarkMode,
     handleProductDetailsShow,
   } = useCartContext();
 
