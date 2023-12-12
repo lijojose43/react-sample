@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import StarRatingView from "../components/StarRatingView";
+import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
 import ProductDetails from "../products/ProductDetails";
 import { makeApiCall, truncateString } from "../utils/utils";
@@ -8,13 +9,15 @@ import PageLoader from "./PageLoader";
 
 function DashboardPage() {
   const {
-    isDarkMode,
     productDetails,
     isDetailsLoading,
     showOffProductDetails,
     setShowOffProductDetails,
     handleProductDetailsShow,
   } = useCartContext();
+
+  const { isDarkMode } = useAppContext();
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);

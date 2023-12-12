@@ -9,20 +9,22 @@ import React, { useEffect } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
+import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
 import { isLoggedIn } from "../utils/utils";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
-function Header({ toggleDarkMode }) {
+function Header({ setIsDarkMode }) {
   const navigate = useNavigate();
   const {
     cartCount,
     updateCartCount,
     showCart,
     handleCartShow,
-    isDarkMode,
     handleProductDetailsShow,
   } = useCartContext();
+
+  const { isDarkMode } = useAppContext();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -72,16 +74,17 @@ function Header({ toggleDarkMode }) {
           <Navbar.Collapse id="basic-navbar-nav">
             {isAuth ? (
               <Nav className="ms-auto">
-                <Nav.Link href="#contact">
-                  <label htmlFor="dark-mode-switch">
-                    <input
-                      style={{ margin: "10px", display: "none" }}
-                      type="checkbox"
-                      id="dark-mode-switch"
-                      checked={isDarkMode}
-                      onChange={toggleDarkMode}
+                <Nav.Link href="">
+                  <label>
+                    <FontAwesomeIcon
+                      icon={isDarkMode ? faSun : faMoon}
+                      onClick={() => {
+                        const mode = !isDarkMode;
+                        setIsDarkMode(mode);
+                        localStorage.setItem("isDarkMode", mode);
+                      }}
+                      style={{ cursor: "pointer" }}
                     />
-                    <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
                   </label>
                 </Nav.Link>
                 <Nav.Link as={Link} to="/dashboard">
@@ -104,14 +107,13 @@ function Header({ toggleDarkMode }) {
               <Nav className="ms-auto">
                 <Nav.Link href="#contact">
                   <label htmlFor="dark-mode-switch">
-                    <input
-                      style={{ margin: "10px", display: "none" }}
-                      type="checkbox"
-                      id="dark-mode-switch"
-                      checked={isDarkMode}
-                      onChange={toggleDarkMode}
+                    <FontAwesomeIcon
+                      icon={isDarkMode ? faSun : faMoon}
+                      onClick={() => {
+                        setIsDarkMode(!isDarkMode);
+                        localStorage.setItem("isDarkMode", !isDarkMode);
+                      }}
                     />
-                    <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
                   </label>
                 </Nav.Link>
                 <Nav.Link as={Link} to="/login">

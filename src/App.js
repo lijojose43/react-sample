@@ -21,92 +21,91 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    setIsDarkMode(false);
-    window.addEventListener("online", handleNetworkChange);
-    window.addEventListener("offline", handleNetworkChange);
+    const handleOnline = () => {
+      setIsOnline(true);
+    };
+
+    const handleOffline = () => {
+      setIsOnline(false);
+    };
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener("online", handleNetworkChange);
-      window.removeEventListener("offline", handleNetworkChange);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
-  }, [setIsDarkMode]);
-
-  function handleNetworkChange() {
-    setIsOnline(navigator.onLine);
-  }
-
-  const toggleDarkMode = () => {
-    const mode = !isDarkMode;
-    setIsDarkMode(mode);
-    localStorage.setItem("isDarkMode", mode);
-  };
+  });
 
   const isLoggedin = isLoggedIn();
+
   return (
-    <AppProvider
-      isDarkMode={isDarkMode}
-      setIsDarkMode={setIsDarkMode}
-      toggleDarkMode={toggleDarkMode}
-    >
-      <CartProvider>
-        {!isOnline ? (
-          <OfflineAlert />
-        ) : (
-          <BrowserRouter>
-            <div
-              style={{
-                backgroundColor: isDarkMode ? "#333" : "#FFF",
-                color: isDarkMode ? "#FFF" : "#333",
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <div className="App w-100">
-                <Routes>
-                  <Route
-                    path=""
-                    element={
-                      isLoggedin === true ? (
-                        <Navigate to="/dashboard" />
-                      ) : (
-                        <Navigate to="/login" />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/login"
-                    element={<LoginPage isDarkMode={isDarkMode} />}
-                  />
-                  <Route
-                    path="/signup"
-                    element={<SignupPage isDarkMode={isDarkMode} />}
-                  />
-                  <Route
-                    path="/forgot-password"
-                    element={<ForgotPasswordPage isDarkMode={isDarkMode} />}
-                  />
-                  <Route path="/terms" element={<TermsPage />} />
-                  <Route path="/privacy" element={<PrivacyPage />} />
-                  <Route path="*" element={<NotFound />} />
-                  <Route path="/" element={<Header isDarkMode={isDarkMode} />}>
+    <>
+      {!isOnline ? (
+        <OfflineAlert />
+      ) : (
+        <AppProvider isDarkMode={isDarkMode}>
+          <CartProvider>
+            <BrowserRouter>
+              <div
+                style={{
+                  backgroundColor: isDarkMode ? "#333" : "#FFF",
+                  color: isDarkMode ? "#FFF" : "#333",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div className="App w-100">
+                  <Routes>
                     <Route
-                      index
-                      path="/dashboard"
-                      element={<DashboardPage isDarkMode={isDarkMode} />}
+                      path=""
+                      element={
+                        isLoggedin === true ? (
+                          <Navigate to="/dashboard" />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
+                      }
                     />
                     <Route
-                      path="/profile"
-                      element={<ProfilePage isDarkMode={isDarkMode} />}
+                      path="/login"
+                      element={<LoginPage isDarkMode={isDarkMode} />}
                     />
-                  </Route>
-                </Routes>
+                    <Route
+                      path="/signup"
+                      element={<SignupPage isDarkMode={isDarkMode} />}
+                    />
+                    <Route
+                      path="/forgot-password"
+                      element={<ForgotPasswordPage isDarkMode={isDarkMode} />}
+                    />
+                    <Route path="/terms" element={<TermsPage />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
+                    <Route path="*" element={<NotFound />} />
+                    <Route
+                      path="/"
+                      element={<Header setIsDarkMode={setIsDarkMode} />}
+                    >
+                      <Route
+                        index
+                        path="/dashboard"
+                        element={<DashboardPage isDarkMode={isDarkMode} />}
+                      />
+                      <Route
+                        path="/profile"
+                        element={<ProfilePage isDarkMode={isDarkMode} />}
+                      />
+                    </Route>
+                  </Routes>
+                </div>
               </div>
-            </div>
-          </BrowserRouter>
-        )}
-      </CartProvider>
-    </AppProvider>
+            </BrowserRouter>
+          </CartProvider>
+        </AppProvider>
+      )}
+    </>
   );
 }
 
