@@ -5,6 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { toast } from "react-toastify";
 import CartLoader from "../cart/CartLoader";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
@@ -26,6 +27,7 @@ const Cart = () => {
   const removeItemFromCart = (productId) => {
     const updatedCart = cartItems.filter((item) => item.id !== productId);
     setCartItems(updatedCart);
+    toast.success("Item removed form your cart successfully!");
   };
 
   return (
@@ -93,6 +95,7 @@ const Cart = () => {
                               <FontAwesomeIcon
                                 icon={faTimesCircle}
                                 onClick={() => removeItemFromCart(product.id)}
+                                style={{ cursor: "pointer" }}
                               />
                             </div>
                           </div>

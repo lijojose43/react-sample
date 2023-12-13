@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+/* Custom CSS to hide the backdrop */
+.offcanvas-backdrop {
+  opacity: 0.1;
+}

@@ -99,7 +99,7 @@ const ProductDetails = ({
                     </div>
                     <div className="col-md-6">
                       <button
-                        className="btn btn-primary w-100"
+                        className="btn btn-success w-100"
                         style={{ borderRadius: "5px" }}
                         onClick={() => addToCart(productDetails)}
                       >

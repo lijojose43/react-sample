@@ -12,6 +12,7 @@ import Cart from "../cart/Cart";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
 import { isLoggedIn } from "../utils/utils";
+import Toaster from "./Toaster";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
 function Header({ setIsDarkMode }) {
@@ -47,6 +48,7 @@ function Header({ setIsDarkMode }) {
 
   return (
     <>
+      <Toaster />
       <Navbar
         bg={isDarkMode ? "dark" : "light"}
         variant={isDarkMode ? "dark" : "light"}

@@ -1,27 +1,26 @@
-import React, { useState } from "react";
-import { Toast } from "react-bootstrap";
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAppContext } from "../context/AppContext";
 
-function Toaster(props) {
-  const [show, setShow] = useState(props.show);
-  const handleClose = () => setShow(false);
-
+const Toaster = () => {
+  const { isDarkMode } = useAppContext();
   return (
     <div>
-      <Toast
-        show={show}
-        style={{ position: "fixed", top: "10px", right: "10px" }}
-        onClose={handleClose}
-        autohide="true"
-      >
-        <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-          <strong className="me-auto">{props.heading}</strong>
-          <small>just now</small>
-        </Toast.Header>
-        <Toast.Body>{props.message}</Toast.Body>
-      </Toast>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={isDarkMode ? "dark" : "light"}
+      />
     </div>
   );
-}
+};
 
 export default Toaster;

@@ -1,3 +1,5 @@
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import StarRatingView from "../components/StarRatingView";
@@ -23,6 +25,7 @@ function DashboardPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 12;
+  const { addToCart } = useCartContext();
 
   const [loading, setLoading] = useState(false);
 
@@ -101,7 +104,6 @@ function DashboardPage() {
                       padding: "6px",
                       backgroundColor: isDarkMode ? "#222" : "#FFF",
                     }}
-                    onClick={() => handleProductDetailsShow(product.id)}
                   >
                     <div
                       className="card-body"
@@ -110,6 +112,7 @@ function DashboardPage() {
                         borderTopLeftRadius: "10px",
                         borderTopRightRadius: "10px",
                       }}
+                      onClick={() => handleProductDetailsShow(product.id)}
                     >
                       <img
                         src={product.images[0]}
@@ -139,6 +142,25 @@ function DashboardPage() {
                         <strong className="text-success">
                           {product.discountPercentage}% OFF
                         </strong>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-md-6">
+                          <button
+                            className="btn btn-warning w-100"
+                            style={{ borderRadius: "5px", fontSize: "13px" }}
+                          >
+                            Buy Now
+                          </button>
+                        </div>
+                        <div className="col-md-6">
+                          <button
+                            className="btn btn-success w-100"
+                            style={{ borderRadius: "5px", fontSize: "13px" }}
+                            onClick={() => addToCart(product)}
+                          >
+                            <FontAwesomeIcon icon={faCartPlus} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

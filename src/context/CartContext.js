@@ -1,5 +1,6 @@
 // CartContext.js
 import React, { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
 import { makeApiCall } from "../utils/utils";
 
 const CartContext = createContext();
@@ -40,15 +41,18 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
   };
 
   const addToCart = (productDetails) => {
-    productDetails.quantity = 1;
+    if (!localStorage.getItem("cart")) {
+      localStorage.setItem("cart", {});
+    }
     const itemIndex = cartItems.findIndex(
       (item) => item.id === productDetails.id
     );
     if (itemIndex === -1) {
-      // Item doesn't exist, add it to the cart
+      productDetails.quantity = 1;
       setCartItems([...cartItems, productDetails]);
+      updateCartCount(2);
+      toast.success("Cart updated successfully");
     } else {
-      // Item exists, update its quantity (or other properties)
       const updatedCart = [...cartItems];
       updatedCart[itemIndex] = {
         ...updatedCart[itemIndex],
@@ -56,6 +60,7 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
       };
       setCartItems(updatedCart);
       updateCartCount(updatedCart.length);
+      toast.warning("Item already present in cart, item quantity updated");
     }
   };
 
