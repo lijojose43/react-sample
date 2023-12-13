@@ -18,7 +18,9 @@ import { isLoggedIn } from "./utils/utils";
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    localStorage.getItem("isDarkMode") === false ? false : true
+  );
 
   useEffect(() => {
     const handleOnline = () => {

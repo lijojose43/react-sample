@@ -3,17 +3,17 @@ import ContentLoader from "react-content-loader";
 
 const PageLoader = (props) => {
   const cardLoaders = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < props.rows; i++) {
     for (let j = 0; j < 8; j++) {
       cardLoaders.push(
-        <rect x={j * 97} y={i * 74} rx="5" ry="5" width="90" height="70" />
+        <rect x={j * 97} y={i * 105} rx="5" ry="5" width="90" height="97" />
       );
     }
   }
 
   return (
     <ContentLoader
-      viewBox="0 0 380 180"
+      viewBox={props.rows == 1 ? "0 0 382 90" : "0 0 382 180"}
       foregroundColor={props.isDarkMode ? "#42424200" : "#eee"}
       backgroundColor={props.isDarkMode ? "#6c6c6c" : "#f5f6f7"}
     >

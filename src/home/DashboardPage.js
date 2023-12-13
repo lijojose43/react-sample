@@ -77,7 +77,7 @@ function DashboardPage() {
         <div className="container">
           <div className="col-md-12">
             <div className="row">
-              <PageLoader isDarkMode={isDarkMode} />
+              <PageLoader isDarkMode={isDarkMode} rows="8" />
             </div>
           </div>
         </div>
@@ -166,6 +166,11 @@ function DashboardPage() {
                   </div>
                 </div>
               ))}
+              {activePage < totalPages ? (
+                <PageLoader isDarkMode={isDarkMode} rows="1" />
+              ) : (
+                ""
+              )}
             </div>
             {/* <CustomPagination
               totalPages={totalPages}
