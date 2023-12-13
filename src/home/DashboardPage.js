@@ -24,8 +24,8 @@ function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 12;
   const { addToCart } = useCartContext();
+  const itemsPerPage = 8;
 
   const [loading, setLoading] = useState(false);
 

@@ -51,7 +51,7 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
       productDetails.quantity = 1;
       setCartItems([...cartItems, productDetails]);
       updateCartCount(2);
-      toast.success("Cart updated successfully");
+      toast.success("Cart updated!");
     } else {
       const updatedCart = [...cartItems];
       updatedCart[itemIndex] = {
@@ -60,7 +60,7 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
       };
       setCartItems(updatedCart);
       updateCartCount(updatedCart.length);
-      toast.warning("Item already present in cart, item quantity updated");
+      toast.success("Cart updated!");
     }
   };
 
