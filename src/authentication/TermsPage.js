@@ -6,7 +6,7 @@ function TermsPage() {
   const navigate = useNavigate();
   return (
     <div className="container">
-      <div className="col-md-12 mt-5">
+      <div className="col-md-12 mt-5" style={{ height: "100vh" }}>
         <div className="row">
           <div className="col-md-12">
             <h3 className="text-center mb-3">Terms and conditions</h3>

@@ -41,16 +41,14 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
   };
 
   const addToCart = (productDetails) => {
-    if (!localStorage.getItem("cart")) {
-      localStorage.setItem("cart", {});
-    }
     const itemIndex = cartItems.findIndex(
       (item) => item.id === productDetails.id
     );
-    if (itemIndex === -1) {
+    if (itemIndex === -1 || itemIndex === 0) {
       productDetails.quantity = 1;
       setCartItems([...cartItems, productDetails]);
-      updateCartCount(2);
+      updateCartCount(cartItems.length + 1);
+      localStorage.setItem("cart", JSON.stringify(cartItems));
       toast.success("Cart updated!");
     } else {
       const updatedCart = [...cartItems];

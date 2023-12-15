@@ -14,10 +14,9 @@ const Cart = () => {
   const [isCartLoading, setCartLoader] = useState(false);
   const { isDarkMode } = useAppContext();
   const { setCartItems } = useCartContext();
-  const { showCart, handleCartShow, handleProductDetailsShow } =
+  const { showCart, handleCartShow, handleProductDetailsShow, cartItems } =
     useCartContext();
   const handleClose = () => handleCartShow(false);
-  const cartItems = JSON.parse(localStorage.getItem("cart"));
 
   let reversedCartItems = [];
   if (Array.isArray(cartItems)) {

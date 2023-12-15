@@ -13,7 +13,7 @@ const PageLoader = (props) => {
 
   return (
     <ContentLoader
-      viewBox={props.rows == 1 ? "0 0 382 95" : "0 0 382 185"}
+      viewBox={props.rows == 1 ? "0 0 382 80" : "0 0 382 185"}
       foregroundColor={props.isDarkMode ? "#42424200" : "#eee"}
       backgroundColor={props.isDarkMode ? "#6c6c6c" : "#f5f6f7"}
     >

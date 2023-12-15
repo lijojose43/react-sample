@@ -116,7 +116,7 @@ function LoginPage() {
           ""
         )}
       </div>
-      <div className="col-md-12 mt-5">
+      <div className="col-md-12 mt-5" style={{ height: "100vh" }}>
         <div className="row">
           <SideImageBlock image="/login.svg"></SideImageBlock>
           <div className="col-md-5">

@@ -58,7 +58,7 @@ function SignupPage() {
 
   return (
     <div className="container">
-      <div className="col-md-12 mt-5">
+      <div className="col-md-12 mt-5" style={{ height: "100vh" }}>
         <div className="row">
           <SideImageBlock image="/register.svg"></SideImageBlock>
           <div className="col-md-5">

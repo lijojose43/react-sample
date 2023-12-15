@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Carousel, Offcanvas } from "react-bootstrap";
 import { useCartContext } from "../context/CartContext";
 import ProductDetailsLoader from "./ProductDetailsLoader";
@@ -13,12 +13,6 @@ const ProductDetails = ({
   const { cartItems, addToCart } = useCartContext();
 
   const handleClose = () => setShowOffProductDetails(false);
-
-  useEffect(() => {
-    if (JSON.stringify(cartItems) !== "n") {
-      localStorage.setItem("cart", JSON.stringify(cartItems));
-    }
-  }, [cartItems]);
 
   return (
     <div>

@@ -28,7 +28,11 @@ function Header({ setIsDarkMode }) {
   const { isDarkMode } = useAppContext();
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    let cart;
+    const cartData = localStorage.getItem("cart");
+    if (cartData) {
+      cart = JSON.parse(cartData);
+    }
     const cartCount = cart && cart.length;
     updateCartCount(cartCount);
   }, [updateCartCount]);
@@ -100,7 +104,7 @@ function Header({ setIsDarkMode }) {
                   <div onClick={() => handleCartClick(!showCart)}>
                     <FontAwesomeIcon icon={faCartShopping} />
                     <Badge pill variant="danger" className="ml-1">
-                      {cartCount}
+                      {cartCount ?? 0}
                     </Badge>
                   </div>
                 </Nav.Link>
