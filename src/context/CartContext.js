@@ -35,6 +35,12 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
     setDetailsLoader(false);
   };
 
+  const updateCartItems = (cartItems) => {
+    setCartItems(cartItems);
+    updateCartCount(cartItems.length);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  };
+
   const handleProductDetailsShow = (productId) => {
     fetchProductData(productId);
     setShowOffProductDetails(true);
@@ -44,11 +50,10 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
     const itemIndex = cartItems.findIndex(
       (item) => item.id === productDetails.id
     );
-    if (itemIndex === -1 || itemIndex === 0) {
+    if (itemIndex === -1) {
       productDetails.quantity = 1;
-      setCartItems([...cartItems, productDetails]);
-      updateCartCount(cartItems.length + 1);
-      localStorage.setItem("cart", JSON.stringify(cartItems));
+      const cartData = [...cartItems, productDetails];
+      updateCartItems(cartData);
       toast.success("Cart updated!");
     } else {
       const updatedCart = [...cartItems];
@@ -56,8 +61,7 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
         ...updatedCart[itemIndex],
         quantity: updatedCart[itemIndex].quantity + 1, // Or update other properties
       };
-      setCartItems(updatedCart);
-      updateCartCount(updatedCart.length);
+      updateCartItems(updatedCart);
       toast.success("Cart updated!");
     }
   };
@@ -81,6 +85,7 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
         cartItems,
         setCartItems,
         addToCart,
+        updateCartItems,
       }}
     >
       {children}

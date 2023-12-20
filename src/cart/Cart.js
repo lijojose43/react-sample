@@ -1,5 +1,7 @@
 import {
   faCartShopping,
+  faMinusCircle,
+  faPlusCircle,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,12 +11,12 @@ import { toast } from "react-toastify";
 import CartLoader from "../cart/CartLoader";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
+import { truncateString } from "../utils/utils";
 
 const Cart = () => {
   const [isCartLoading, setCartLoader] = useState(false);
   const { isDarkMode } = useAppContext();
-  const { setCartItems } = useCartContext();
-  const { showCart, handleCartShow, handleProductDetailsShow, cartItems } =
+  const { showCart, handleCartShow, cartItems, updateCartItems } =
     useCartContext();
   const handleClose = () => handleCartShow(false);
 
@@ -25,8 +27,25 @@ const Cart = () => {
 
   const removeItemFromCart = (productId) => {
     const updatedCart = cartItems.filter((item) => item.id !== productId);
-    setCartItems(updatedCart);
-    toast.success("Item removed form your cart successfully!");
+    updateCartItems(updatedCart);
+    toast.success("Cart updated!");
+  };
+
+  const updateQuantity = (productId, action) => {
+    let updatedCart = [...cartItems];
+    const itemIndex = cartItems.findIndex((item) => item.id === productId);
+    updatedCart[itemIndex] = {
+      ...updatedCart[itemIndex],
+      quantity:
+        action === 0
+          ? updatedCart[itemIndex].quantity - 1
+          : updatedCart[itemIndex].quantity + 1,
+    };
+    updateCartItems(updatedCart);
+    if (action === 0 && updatedCart[itemIndex].quantity === 0) {
+      updatedCart = cartItems.filter((item) => item.id !== productId);
+    }
+    updateCartItems(updatedCart);
   };
 
   return (
@@ -84,10 +103,33 @@ const Cart = () => {
                                     : "p-2 text-dark"
                                 }
                               >
-                                <strong>{product.title}</strong>
+                                <strong title={product.title}>
+                                  {truncateString(product.title, 18)}
+                                </strong>
                                 <br />₹{product.price}
                                 <br />
-                                <small>Qty : {product.quantity ?? 1}</small>
+                                <small
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faMinusCircle}
+                                    style={{ marginRight: "10px" }}
+                                    onClick={() =>
+                                      updateQuantity(product.id, 0)
+                                    }
+                                  ></FontAwesomeIcon>
+                                  Qty : {product.quantity ?? 1}
+                                  <FontAwesomeIcon
+                                    icon={faPlusCircle}
+                                    style={{ marginLeft: "10px" }}
+                                    onClick={() =>
+                                      updateQuantity(product.id, 1)
+                                    }
+                                  ></FontAwesomeIcon>
+                                </small>
                               </span>
                             </div>
                             <div style={{ right: "5px" }}>

@@ -43,7 +43,7 @@ function App() {
   const isLoggedin = isLoggedIn();
 
   return (
-    <>
+    <div style={{ height: "100%", overflow: "hidden" }}>
       {!isOnline ? (
         <OfflineAlert />
       ) : (
@@ -107,7 +107,7 @@ function App() {
           </CartProvider>
         </AppProvider>
       )}
-    </>
+    </div>
   );
 }
 

@@ -143,8 +143,8 @@ function DashboardPage() {
                           {product.discountPercentage}% OFF
                         </strong>
                       </div>
-                      <div className="row mt-2">
-                        <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-6  mt-2">
                           <button
                             className="btn btn-warning w-100"
                             style={{ borderRadius: "5px", fontSize: "13px" }}
@@ -152,7 +152,7 @@ function DashboardPage() {
                             Buy Now
                           </button>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6 mt-2">
                           <button
                             className="btn btn-success w-100"
                             style={{ borderRadius: "5px", fontSize: "13px" }}

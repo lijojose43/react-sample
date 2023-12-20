@@ -238,7 +238,7 @@ function LoginPage() {
                   </button>
                 </div>
                 <div className="form-group text-center mt-3">
-                  New to React Demo? <Link to="/signup">Sign up</Link>
+                  {/* New to React Demo? <Link to="/signup">Sign up</Link> */}
                 </div>
                 <Terms></Terms>
               </div>
