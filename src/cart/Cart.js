@@ -48,6 +48,11 @@ const Cart = () => {
     updateCartItems(updatedCart);
   };
 
+  const cartTotal = reversedCartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
   return (
     <div>
       <Offcanvas
@@ -145,6 +150,10 @@ const Cart = () => {
                     );
                   })}
                 </span>
+                <div className="cart-total">
+                  <span className="total-text">Total:</span>
+                  <span className="total-amount">₹{cartTotal.toFixed(2)}</span>
+                </div>
               </div>
             ) : (
               <div className="mt-5 d-flex flex-column align-items-center justify-content-center">

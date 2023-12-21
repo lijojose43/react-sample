@@ -55,6 +55,7 @@ const ProductDetails = ({
                   </Carousel>
                 </span>
                 <h4 className="mt-2">{productDetails.title}</h4>
+                <h5>₹{productDetails.price}</h5>
                 <span
                   className="badge text-white"
                   style={{ backgroundColor: "blue", borderColor: "blue" }}
