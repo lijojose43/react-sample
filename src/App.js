@@ -43,7 +43,7 @@ function App() {
   const isLoggedin = isLoggedIn();
 
   return (
-    <div style={{ height: "100%", overflow: "hidden" }}>
+    <div style={{ height: "100%" }}>
       {!isOnline ? (
         <OfflineAlert />
       ) : (
