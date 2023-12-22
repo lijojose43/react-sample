@@ -2,6 +2,7 @@ import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import StarRatingView from "../components/StarRatingView";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
@@ -148,6 +149,9 @@ function DashboardPage() {
                           <button
                             className="btn btn-warning w-100"
                             style={{ borderRadius: "5px", fontSize: "13px" }}
+                            onClick={() => {
+                              toast.warning("Coming soon");
+                            }}
                           >
                             Buy Now
                           </button>

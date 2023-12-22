@@ -154,6 +154,16 @@ const Cart = () => {
                   <span className="total-text">Total:</span>
                   <span className="total-amount">₹{cartTotal.toFixed(2)}</span>
                 </div>
+                <div>
+                  <button
+                    className="btn btn-primary w-100 mt-3"
+                    onClick={() => {
+                      toast.warning("Coming soon");
+                    }}
+                  >
+                    Checkout
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="mt-5 d-flex flex-column align-items-center justify-content-center">
