@@ -22,7 +22,7 @@ const PageLoader = (props) => {
       <div className="row justify-content-center">
         <div className="col-md-12">
           <ContentLoader
-            viewBox={isMobile ? "0 0 90 97" : "0 0 382 185"}
+            viewBox={isMobile ? "0 0 90 97" : "0 0 382 50"}
             foregroundColor={props.isDarkMode ? "#42424200" : "#eee"}
             backgroundColor={props.isDarkMode ? "#6c6c6c" : "#f5f6f7"}
           >

@@ -171,7 +171,7 @@ function DashboardPage() {
                 </div>
               ))}
               {activePage < totalPages ? (
-                <PageLoader isDarkMode={isDarkMode} rows="2" />
+                <PageLoader isDarkMode={isDarkMode} rows="1" />
               ) : (
                 ""
               )}
