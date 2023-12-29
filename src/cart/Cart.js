@@ -7,17 +7,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import { removeFromCart } from "../actions/cartActions";
 import CartLoader from "../cart/CartLoader";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
 import { truncateString } from "../utils/utils";
 
-const Cart = () => {
+const Cart = ({ cartItems, removeFromCart }) => {
   const [isCartLoading, setCartLoader] = useState(false);
   const { isDarkMode } = useAppContext();
-  const { showCart, handleCartShow, cartItems, updateCartItems } =
-    useCartContext();
+  const { showCart, handleCartShow, updateCartItems } = useCartContext();
   const handleClose = () => handleCartShow(false);
 
   let reversedCartItems = [];
@@ -180,4 +181,14 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cart.items,
+  };
+};
+
+const mapDispatchToProps = {
+  removeFromCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
