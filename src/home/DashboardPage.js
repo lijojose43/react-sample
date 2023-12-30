@@ -78,7 +78,11 @@ function DashboardPage() {
         <div className="container">
           <div className="col-md-12">
             <div className="row">
-              <PageLoader isDarkMode={isDarkMode} rows="8" />
+              <PageLoader
+                isDarkMode={isDarkMode}
+                rows="8"
+                viewport="0 0 382 200"
+              />
             </div>
           </div>
         </div>
@@ -96,7 +100,7 @@ function DashboardPage() {
                 />
               )}
               {data.map((product, index) => (
-                <div key={index} className="col-md-3 mb-3">
+                <div key={index} className="col-12 col-md-4 col-lg-3 mb-3">
                   <div
                     className="card"
                     style={{
@@ -131,7 +135,7 @@ function DashboardPage() {
                       <div className="d-flex justify-content-between">
                         <span style={{ textAlign: "left" }}>
                           <span title={product.title}>
-                            {truncateString(product.title, 18)}
+                            {truncateString(product.title, 13)}
                           </span>
                         </span>
                         <strong>₹{product.price}</strong>
@@ -140,8 +144,8 @@ function DashboardPage() {
                         <span style={{ textAlign: "left" }}>
                           <StarRatingView rating={product.rating} />
                         </span>
-                        <strong className="text-success">
-                          {product.discountPercentage}% OFF
+                        <strong>
+                          <small className="text-success">{`${product.discountPercentage}%OFF`}</small>
                         </strong>
                       </div>
                       <div className="row">
@@ -153,7 +157,7 @@ function DashboardPage() {
                               toast.warning("Coming soon");
                             }}
                           >
-                            Buy Now
+                            Buy
                           </button>
                         </div>
                         <div className="col-md-6 mt-2">
@@ -171,7 +175,11 @@ function DashboardPage() {
                 </div>
               ))}
               {activePage < totalPages ? (
-                <PageLoader isDarkMode={isDarkMode} rows="2" />
+                <PageLoader
+                  isDarkMode={isDarkMode}
+                  rows="1"
+                  viewport="0 0 382 50"
+                />
               ) : (
                 ""
               )}

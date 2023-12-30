@@ -20,9 +20,9 @@ const PageLoader = (props) => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col-md-12">
+        <div className="col-md-12" style={{ minHeight: "100%" }}>
           <ContentLoader
-            viewBox={isMobile ? "0 0 90 100" : "0 0 382 163"}
+            viewBox={isMobile ? `0 0 90 100` : props.viewport}
             foregroundColor={props.isDarkMode ? "#42424200" : "#eee"}
             backgroundColor={props.isDarkMode ? "#6c6c6c" : "#f5f6f7"}
           >
