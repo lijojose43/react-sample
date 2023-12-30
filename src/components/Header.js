@@ -46,7 +46,9 @@ function Header({ setIsDarkMode }) {
     navigate("/login");
   };
 
-  const isHomePage = window.location.pathname === "/";
+  const isHomePage =
+    window.location.pathname === "/" ||
+    window.location.pathname === "/dashboard";
 
   var isAuth = isLoggedIn();
 
