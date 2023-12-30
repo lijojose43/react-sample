@@ -7,27 +7,28 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
+import { setShowCart } from "../slices/cartSlice";
 import { isLoggedIn } from "../utils/utils";
 import Toaster from "./Toaster";
 import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
 function Header({ setIsDarkMode }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { showCart, handleCartShow, handleProductDetailsShow } =
-    useCartContext();
+  const { handleProductDetailsShow } = useCartContext();
 
   const { isDarkMode } = useAppContext();
 
   const cartItems = useSelector((state) => state.cart.items);
   const cartCount = cartItems.length;
 
-  const handleCartClick = (status) => {
-    handleCartShow(status);
+  const handleCartClick = () => {
+    dispatch(setShowCart());
   };
 
   const handleLogout = () => {
@@ -92,7 +93,7 @@ function Header({ setIsDarkMode }) {
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 <Nav.Link>
-                  <div onClick={() => handleCartClick(!showCart)}>
+                  <div onClick={() => handleCartClick()}>
                     <FontAwesomeIcon icon={faCartShopping} />
                     <Badge pill variant="danger" className="ml-1">
                       {cartCount ?? 0}

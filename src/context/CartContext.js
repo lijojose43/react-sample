@@ -10,7 +10,6 @@ export const useCartContext = () => {
 
 export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
   const [cartCount, setCartCount] = useState(0);
-  const [showCart, setShowCart] = useState(false);
   const [showOffProductDetails, setShowOffProductDetails] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
   const [isDetailsLoading, setDetailsLoader] = useState(false);
@@ -18,14 +17,6 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
     const storedCart = localStorage.getItem("cart");
     return storedCart ? JSON.parse(storedCart) : [];
   });
-
-  const updateCartCount = (count) => {
-    setCartCount(count);
-  };
-
-  const handleCartShow = (status) => {
-    setShowCart(status);
-  };
 
   const fetchProductData = async (productId) => {
     setDetailsLoader(true);
@@ -43,10 +34,7 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
     <CartContext.Provider
       value={{
         cartCount,
-        showCart,
         isDarkMode,
-        updateCartCount,
-        handleCartShow,
         toggleDarkMode,
         showOffProductDetails,
         setShowOffProductDetails,
