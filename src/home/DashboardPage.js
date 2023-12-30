@@ -2,11 +2,13 @@ import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import StarRatingView from "../components/StarRatingView";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
 import ProductDetails from "../products/ProductDetails";
+import { addToCart } from "../slices/cartSlice";
 import { makeApiCall, truncateString } from "../utils/utils";
 import PageLoader from "./PageLoader";
 
@@ -19,13 +21,18 @@ function DashboardPage() {
     handleProductDetailsShow,
   } = useCartContext();
 
+  const dispatch = useDispatch();
+
+  const handleUpdateCart = (item) => {
+    dispatch(addToCart(item));
+  };
+
   const { isDarkMode } = useAppContext();
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const { addToCart } = useCartContext();
   const itemsPerPage = 8;
 
   const [loading, setLoading] = useState(false);
@@ -164,7 +171,7 @@ function DashboardPage() {
                           <button
                             className="btn btn-success w-100"
                             style={{ borderRadius: "5px", fontSize: "13px" }}
-                            onClick={() => addToCart(product)}
+                            onClick={() => handleUpdateCart(product)}
                           >
                             <FontAwesomeIcon icon={faCartPlus} />
                           </button>

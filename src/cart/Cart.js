@@ -7,17 +7,25 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import CartLoader from "../cart/CartLoader";
 import { useAppContext } from "../context/AppContext";
 import { useCartContext } from "../context/CartContext";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "../slices/cartSlice";
 import { truncateString } from "../utils/utils";
 
 const Cart = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+
   const [isCartLoading, setCartLoader] = useState(false);
   const { isDarkMode } = useAppContext();
-  const { showCart, handleCartShow, updateCartItems, cartItems } =
-    useCartContext();
+  const { showCart, handleCartShow } = useCartContext();
   const handleClose = () => handleCartShow(false);
 
   let reversedCartItems = [];
@@ -25,33 +33,22 @@ const Cart = () => {
     reversedCartItems = cartItems.slice().reverse();
   }
 
-  const removeItemFromCart = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    updateCartItems(updatedCart);
-    toast.success("Cart updated!");
-  };
-
-  const updateQuantity = (productId, action) => {
-    let updatedCart = [...cartItems];
-    const itemIndex = cartItems.findIndex((item) => item.id === productId);
-    updatedCart[itemIndex] = {
-      ...updatedCart[itemIndex],
-      quantity:
-        action === 0
-          ? updatedCart[itemIndex].quantity - 1
-          : updatedCart[itemIndex].quantity + 1,
-    };
-    updateCartItems(updatedCart);
-    if (action === 0 && updatedCart[itemIndex].quantity === 0) {
-      updatedCart = cartItems.filter((item) => item.id !== productId);
-    }
-    updateCartItems(updatedCart);
-  };
-
   const cartTotal = reversedCartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  const handleIncreaseQuantity = (item) => {
+    dispatch(increaseQuantity(item));
+  };
+
+  const handleDecreaseQuantity = (item) => {
+    dispatch(decreaseQuantity(item));
+  };
+
+  const handleRemoveFromCart = (item) => {
+    dispatch(removeFromCart(item));
+  };
 
   return (
     <div>
@@ -123,7 +120,7 @@ const Cart = () => {
                                     icon={faMinusCircle}
                                     style={{ marginRight: "10px" }}
                                     onClick={() =>
-                                      updateQuantity(product.id, 0)
+                                      handleDecreaseQuantity(product)
                                     }
                                   ></FontAwesomeIcon>
                                   Qty : {product.quantity ?? 1}
@@ -131,7 +128,7 @@ const Cart = () => {
                                     icon={faPlusCircle}
                                     style={{ marginLeft: "10px" }}
                                     onClick={() =>
-                                      updateQuantity(product.id, 1)
+                                      handleIncreaseQuantity(product)
                                     }
                                   ></FontAwesomeIcon>
                                 </small>
@@ -140,7 +137,7 @@ const Cart = () => {
                             <div style={{ right: "5px" }}>
                               <FontAwesomeIcon
                                 icon={faTimesCircle}
-                                onClick={() => removeItemFromCart(product.id)}
+                                onClick={() => handleRemoveFromCart(product)}
                                 style={{ cursor: "pointer" }}
                               />
                             </div>

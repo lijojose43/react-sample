@@ -5,8 +5,9 @@ import {
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
 import { useAppContext } from "../context/AppContext";
@@ -17,25 +18,13 @@ import LoggedInOutlet from "./outlets/LoggedInOutlet";
 
 function Header({ setIsDarkMode }) {
   const navigate = useNavigate();
-  const {
-    cartCount,
-    updateCartCount,
-    showCart,
-    handleCartShow,
-    handleProductDetailsShow,
-  } = useCartContext();
+  const { showCart, handleCartShow, handleProductDetailsShow } =
+    useCartContext();
 
   const { isDarkMode } = useAppContext();
 
-  useEffect(() => {
-    let cart;
-    const cartData = localStorage.getItem("cart");
-    if (cartData) {
-      cart = JSON.parse(cartData);
-    }
-    const cartCount = cart && cart.length;
-    updateCartCount(cartCount);
-  }, [updateCartCount]);
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartCount = cartItems.length;
 
   const handleCartClick = (status) => {
     handleCartShow(status);

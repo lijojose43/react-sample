@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel, Offcanvas } from "react-bootstrap";
-import { useCartContext } from "../context/CartContext";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../slices/cartSlice";
 import ProductDetailsLoader from "./ProductDetailsLoader";
 
 const ProductDetails = ({
@@ -10,7 +11,11 @@ const ProductDetails = ({
   isDarkMode,
   isDetailsLoading,
 }) => {
-  const { cartItems, addToCart } = useCartContext();
+  const dispatch = useDispatch();
+
+  const handleUpdateCart = (item) => {
+    dispatch(addToCart(item));
+  };
 
   const handleClose = () => setShowOffProductDetails(false);
 
@@ -96,7 +101,7 @@ const ProductDetails = ({
                       <button
                         className="btn btn-success w-100"
                         style={{ borderRadius: "5px" }}
-                        onClick={() => addToCart(productDetails)}
+                        onClick={() => handleUpdateCart(productDetails)}
                       >
                         Add to cart
                       </button>

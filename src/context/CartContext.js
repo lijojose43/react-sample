@@ -1,6 +1,5 @@
 // CartContext.js
 import React, { createContext, useContext, useState } from "react";
-import { toast } from "react-toastify";
 import { makeApiCall } from "../utils/utils";
 
 const CartContext = createContext();
@@ -35,35 +34,9 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
     setDetailsLoader(false);
   };
 
-  const updateCartItems = (cartItems) => {
-    setCartItems(cartItems);
-    updateCartCount(cartItems.length);
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  };
-
   const handleProductDetailsShow = (productId) => {
     fetchProductData(productId);
     setShowOffProductDetails(true);
-  };
-
-  const addToCart = (productDetails) => {
-    const itemIndex = cartItems.findIndex(
-      (item) => item.id === productDetails.id
-    );
-    if (itemIndex === -1) {
-      productDetails.quantity = 1;
-      const cartData = [...cartItems, productDetails];
-      updateCartItems(cartData);
-      toast.success("Cart updated!");
-    } else {
-      const updatedCart = [...cartItems];
-      updatedCart[itemIndex] = {
-        ...updatedCart[itemIndex],
-        quantity: updatedCart[itemIndex].quantity + 1, // Or update other properties
-      };
-      updateCartItems(updatedCart);
-      toast.success("Cart updated!");
-    }
   };
 
   return (
@@ -84,8 +57,6 @@ export const CartProvider = ({ children, isDarkMode, toggleDarkMode }) => {
         handleProductDetailsShow,
         cartItems,
         setCartItems,
-        addToCart,
-        updateCartItems,
       }}
     >
       {children}
